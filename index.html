@@ -1,0 +1,897 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Report | Zam-Zam Hidden Spot</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #f5f7fb;
+  --white: #ffffff;
+  --navy: #14213d;
+  --navy2: #1d3156;
+  --blue: #4263eb;
+  --blue-light: #edf1ff;
+  --text: #202b3c;
+  --muted: #78849a;
+  --border: #e7ebf2;
+  --green: #169b62;
+  --green-bg: #e8f7ef;
+  --orange: #d88924;
+  --orange-bg: #fff5e6;
+  --red: #d84b54;
+  --red-bg: #fff0f0;
+  --shadow: 0 5px 22px rgba(24, 39, 75, .045);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+.app { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  background: var(--navy);
+  color: white;
+  position: fixed;
+  inset: 0 auto 0 0;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 17px;
+  z-index: 20;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 30px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.brand-icon {
+  width: 39px;
+  height: 39px;
+  border-radius: 12px;
+  background: #4263eb;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.brand h2 { font-size: 15px; letter-spacing: .2px; }
+.brand p { color: #aebbd1; font-size: 10px; margin-top: 3px; }
+
+.nav-label {
+  color: #8292ae;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  margin: 27px 10px 10px;
+}
+
+.nav-link {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #b8c5da;
+  padding: 11px 12px;
+  border-radius: 9px;
+  margin: 2px 0;
+  font-size: 12px;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: white;
+  background: rgba(255,255,255,.12);
+}
+
+.nav-link.active { border-left: 3px solid #7894ff; }
+.nav-icon { width: 19px; text-align: center; font-size: 15px; }
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 15px 10px 0;
+  border-top: 1px solid rgba(255,255,255,.12);
+  color: #aebbd1;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+/* MAIN */
+.main {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+}
+
+.topbar {
+  height: 67px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.breadcrumb { color: var(--muted); font-size: 12px; }
+.breadcrumb strong { color: var(--text); }
+
+.top-actions { display: flex; align-items: center; gap: 12px; }
+
+.status {
+  background: var(--green-bg);
+  color: var(--green);
+  border-radius: 20px;
+  padding: 6px 11px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.print-btn {
+  border: 1px solid var(--border);
+  background: white;
+  padding: 8px 13px;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.content { padding: 30px 35px 60px; max-width: 1500px; margin: auto; }
+
+section { scroll-margin-top: 90px; margin-bottom: 35px; }
+
+.eyebrow {
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  font-size: 10px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+h1, h2, h3 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+.hero {
+  background: linear-gradient(120deg, #14213d, #243e6a);
+  color: white;
+  border-radius: 17px;
+  padding: 35px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero:after {
+  content: "ZHS";
+  position: absolute;
+  right: 30px;
+  bottom: -40px;
+  font-family: 'Plus Jakarta Sans';
+  font-size: 160px;
+  font-weight: 800;
+  color: rgba(255,255,255,.045);
+}
+
+.hero .eyebrow { color: #9eb4ff; }
+.hero h1 { font-size: clamp(25px, 3vw, 36px); max-width: 650px; line-height: 1.25; }
+.hero p { color: #c4cee0; line-height: 1.8; max-width: 650px; margin-top: 14px; font-size: 12px; }
+
+.hero-meta {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 27px;
+  color: #c4cee0;
+  font-size: 11px;
+}
+
+.hero-meta strong { color: white; display: block; margin-bottom: 4px; }
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 17px;
+  gap: 15px;
+}
+
+.section-heading h2 { font-size: 19px; color: var(--navy); }
+.section-heading p { color: var(--muted); font-size: 11px; margin-top: 5px; }
+
+.grid { display: grid; gap: 15px; }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 19px;
+  box-shadow: var(--shadow);
+}
+
+.stat-card { min-height: 125px; }
+.stat-top { display: flex; justify-content: space-between; align-items: center; }
+.stat-label { color: var(--muted); font-size: 11px; }
+.stat-icon {
+  width: 32px; height: 32px; border-radius: 9px;
+  display: grid; place-items: center; background: var(--blue-light);
+  color: var(--blue); font-size: 15px;
+}
+.stat-value { font-family: 'Plus Jakarta Sans'; font-size: 26px; font-weight: 800; margin-top: 12px; color: var(--navy); }
+.stat-note { color: var(--muted); font-size: 10px; margin-top: 4px; }
+
+.card h3 { font-size: 13px; margin-bottom: 12px; color: var(--navy); }
+.card p { color: #657187; font-size: 11px; line-height: 1.8; }
+
+.tag {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 9px;
+  font-weight: 700;
+}
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-orange { background: var(--orange-bg); color: var(--orange); }
+.tag-green { background: var(--green-bg); color: var(--green); }
+.tag-blue { background: var(--blue-light); color: var(--blue); }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; }
+th {
+  text-align: left; color: #7a879c; font-size: 10px;
+  font-weight: 700; padding: 12px 13px;
+  background: #f8f9fc; border-bottom: 1px solid var(--border);
+}
+td { padding: 13px; font-size: 11px; line-height: 1.6; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: 0; }
+td strong { color: var(--navy); }
+
+/* FLOW */
+.flow {
+  display: flex; align-items: stretch; gap: 7px;
+  overflow-x: auto; padding: 10px 2px 15px;
+}
+.flow-step {
+  flex: 1; min-width: 105px; text-align: center;
+  background: #f5f7ff; border: 1px solid #e1e7ff;
+  border-radius: 10px; padding: 15px 9px;
+}
+.flow-step b { display: block; color: var(--blue); font-size: 11px; margin-bottom: 7px; }
+.flow-step small { color: #68758b; font-size: 9px; line-height: 1.5; display: block; }
+.flow-arrow { align-self: center; color: #9aa8c1; font-size: 17px; }
+
+/* BARS */
+.score-row { margin: 16px 0; }
+.score-info { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 7px; }
+.score-info strong { color: var(--navy); }
+.score-info span { color: var(--muted); }
+.bar { height: 8px; border-radius: 10px; background: #edf0f6; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 10px; background: var(--blue); }
+.bar-fill.primary { background: #4263eb; }
+.bar-fill.secondary { background: #7189d9; }
+.bar-fill.light { background: #9aaddf; }
+
+/* ROADMAP */
+.roadmap-item { display: flex; gap: 13px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.roadmap-item:last-child { border: 0; }
+.priority {
+  min-width: 37px; height: 27px; display: grid; place-items: center;
+  border-radius: 7px; font-size: 10px; font-weight: 800;
+}
+.p0 { background: var(--red-bg); color: var(--red); }
+.p1 { background: var(--orange-bg); color: var(--orange); }
+.p2 { background: var(--green-bg); color: var(--green); }
+.roadmap-item h4 { font-size: 11px; margin-bottom: 4px; }
+.roadmap-item p { font-size: 10px; }
+
+/* PDCA */
+.pdca-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.pdca-box { border-radius: 10px; padding: 16px; background: #f5f7ff; border: 1px solid #e5eaff; }
+.pdca-box strong { color: var(--blue); font-size: 18px; display: block; margin-bottom: 7px; }
+.pdca-box b { font-size: 11px; display: block; margin-bottom: 5px; }
+.pdca-box p { font-size: 10px; }
+
+/* FOOTER */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 35px;
+  color: var(--muted);
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* MOBILE */
+.menu-btn {
+  display: none; background: transparent; border: 0;
+  font-size: 22px; color: var(--navy);
+}
+.overlay { display: none; }
+
+@media(max-width: 1050px) {
+  .grid-4 { grid-template-columns: repeat(2,1fr); }
+  .grid-3 { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width: 720px) {
+  .sidebar { transform: translateX(-100%); transition: .25s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; width: 100%; }
+  .menu-btn { display: block; }
+  .topbar { padding: 0 17px; }
+  .content { padding: 20px 16px 40px; }
+  .hero { padding: 25px 21px; }
+  .hero:after { font-size: 100px; }
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .pdca-grid { grid-template-columns: repeat(2,1fr); }
+  .footer { padding: 18px; flex-direction: column; }
+  .status { display: none; }
+  .section-heading { align-items: start; flex-direction: column; }
+  .overlay.show {
+    display: block; position: fixed; inset: 0;
+    background: rgba(0,0,0,.4); z-index: 15;
+  }
+}
+
+@media print {
+  .sidebar, .topbar, .print-btn, .menu-btn { display: none !important; }
+  .main { margin: 0; width: 100%; }
+  .content { padding: 0; }
+  body { background: white; }
+  .card, .hero { break-inside: avoid; box-shadow: none; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon">Z</div>
+      <div>
+        <h2>ZHS AUDIT</h2>
+        <p>Website Evaluation Report</p>
+      </div>
+    </div>
+
+    <div class="nav-label">MAIN MENU</div>
+    <a href="#overview" class="nav-link active"><span class="nav-icon">▦</span> Overview</a>
+    <a href="#profil" class="nav-link"><span class="nav-icon">◈</span> Profil Website</a>
+    <a href="#temuan" class="nav-link"><span class="nav-icon">⌕</span> Temuan Audit</a>
+    <a href="#scm" class="nav-link"><span class="nav-icon">⇄</span> Analisis SCM</a>
+    <a href="#framework" class="nav-link"><span class="nav-icon">▤</span> Framework Analysis</a>
+
+    <div class="nav-label">EVALUATION</div>
+    <a href="#dokumen" class="nav-link"><span class="nav-icon">▧</span> Evaluasi Makalah & PPT</a>
+    <a href="#roadmap" class="nav-link"><span class="nav-icon">➜</span> Roadmap Pengembangan</a>
+    <a href="#kesimpulan" class="nav-link"><span class="nav-icon">✓</span> Kesimpulan</a>
+
+    <div class="sidebar-bottom">
+      <strong>Zam-Zam Hidden Spot</strong><br>
+      Website Audit & SCM Evaluation<br>
+      Report Version 1.0 · 2026
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:13px">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div class="breadcrumb">Audit Report / <strong>ZHS Website</strong></div>
+      </div>
+      <div class="top-actions">
+        <span class="status">● REPORT COMPLETED</span>
+        <button class="print-btn" onclick="window.print()">↓ Export PDF</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <section id="overview">
+        <div class="hero">
+          <div class="eyebrow">Website Audit & Supply Chain Evaluation</div>
+          <h1>Analisis dan Evaluasi Platform Zam-Zam Hidden Spot</h1>
+          <p>
+            Evaluasi menyeluruh terhadap struktur website, fungsionalitas,
+            antarmuka pengguna, implementasi teknologi, serta kesesuaian
+            platform dengan konsep Supply Chain Management pada ekosistem
+            pariwisata digital.
+          </p>
+          <div class="hero-meta">
+            <div><strong>PROJECT</strong>Zam-Zam Hidden Spot</div>
+            <div><strong>REPOSITORY</strong>bdull02/SCM</div>
+            <div><strong>ANALYSIS</strong>Website & SCM</div>
+            <div><strong>YEAR</strong>2026</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Executive Summary</div>
+            <h2>Ringkasan Hasil Audit</h2>
+            <p>Gambaran umum hasil evaluasi terhadap implementasi platform ZHS.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Area Evaluasi</span><span class="stat-icon">▦</span></div>
+            <div class="stat-value">06</div>
+            <div class="stat-note">Aspek utama pemeriksaan</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Prioritas Tinggi</span><span class="stat-icon">⚑</span></div>
+            <div class="stat-value">03</div>
+            <div class="stat-note">Kelompok rekomendasi P0, P1, P2</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Readiness SCM</span><span class="stat-icon">◷</span></div>
+            <div class="stat-value">1.33/5</div>
+            <div class="stat-note">Estimasi analitis, bukan hasil survei</div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-top"><span class="stat-label">Framework Utama</span><span class="stat-icon">◇</span></div>
+            <div class="stat-value" style="font-size:21px">SCOR</div>
+            <div class="stat-note">SCOR Digital Standard</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFIL WEBSITE -->
+      <section id="profil">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">01 / Website Profile</div>
+            <h2>Profil dan Struktur Website</h2>
+            <p>Identifikasi teknologi, modul, dan karakteristik platform yang diperiksa.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Teknologi yang Digunakan</h3>
+            <table>
+              <tr><td>Frontend Framework</td><td><strong>React 19</strong></td></tr>
+              <tr><td>Programming Language</td><td><strong>TypeScript</strong></td></tr>
+              <tr><td>Build Tool</td><td><strong>Vite</strong></td></tr>
+              <tr><td>Styling</td><td><strong>Tailwind CSS</strong></td></tr>
+              <tr><td>State Management</td><td><strong>Zustand</strong></td></tr>
+            </table>
+          </div>
+          <div class="card">
+            <h3>Identitas Platform</h3>
+            <p>
+              ZHS merupakan platform pariwisata digital yang berperan sebagai
+              penghubung wisatawan dengan pemandu lokal, UMKM, penyedia
+              transportasi, dan pengelola destinasi.
+            </p>
+            <br>
+            <p><strong>Repositori:</strong></p>
+            <p><a href="https://github.com/bdull02/SCM" target="_blank">github.com/bdull02/SCM</a></p>
+            <br>
+            <span class="tag tag-blue">Digital Tourism Platform</span>
+            <span class="tag tag-green">Responsive Interface</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Modul dan Halaman yang Teridentifikasi</h3>
+          <div class="grid grid-3">
+            <div><span class="tag tag-blue">01 · User</span><p>Welcome, Login, Register, Home, Explore, Profile.</p></div>
+            <div><span class="tag tag-blue">02 · Destination</span><p>Tour Detail, Destination Detail, Live Tour, Review.</p></div>
+            <div><span class="tag tag-blue">03 · Booking</span><p>Booking, Payment, QRIS, Payment Success, Booking Detail.</p></div>
+            <div><span class="tag tag-blue">04 · Matching</span><p>Smart Match, Guide Availability, Voucher.</p></div>
+            <div><span class="tag tag-blue">05 · Communication</span><p>Direct Chat, Notifications, Help Center.</p></div>
+            <div><span class="tag tag-blue">06 · Partner</span><p>Guide Dashboard, Guide Registration, Verification, Dispute.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEMUAN AUDIT -->
+      <section id="temuan">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">02 / Audit Findings</div>
+            <h2>Temuan Audit Website</h2>
+            <p>Keunggulan, kelemahan, dan aspek yang belum terealisasikan.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3><span class="tag tag-green">KEUNGGULAN</span></h3>
+            <div class="roadmap-item"><div><h4>Struktur Modular</h4><p>Komponen dan halaman dipisahkan berdasarkan fungsi sehingga pengembangan lebih terorganisasi.</p></div></div>
+            <div class="roadmap-item"><div><h4>Antarmuka Responsif</h4><p>Penggunaan breakpoint dan navigasi desktop/mobile mendukung akses dari berbagai perangkat.</p></div></div>
+            <div class="roadmap-item"><div><h4>Konsep Layanan Terintegrasi</h4><p>Alur wisatawan, pemandu, pemesanan, dan layanan mitra sudah direpresentasikan dalam modul aplikasi.</p></div></div>
+            <div class="roadmap-item"><div><h4>Smart Match</h4><p>Konsep pencocokan wisatawan dan pemandu menggunakan beberapa parameter preferensi.</p></div></div>
+          </div>
+
+          <div class="card">
+            <h3><span class="tag tag-red">KEKURANGAN</span></h3>
+            <div class="roadmap-item"><div><h4>Autentikasi Simulatif</h4><p>Login belum menunjukkan integrasi autentikasi backend yang sesungguhnya.</p></div></div>
+            <div class="roadmap-item"><div><h4>Pembayaran Belum Terintegrasi</h4><p>Proses QRIS mengubah status booking secara langsung tanpa bukti verifikasi gateway.</p></div></div>
+            <div class="roadmap-item"><div><h4>Data Masih Mock</h4><p>Sejumlah data pemandu, UMKM, destinasi, dan booking menggunakan data simulasi.</p></div></div>
+            <div class="roadmap-item"><div><h4>Belum Ada Real-time Backend</h4><p>Chat dan beberapa proses masih menggunakan simulasi, belum membuktikan komunikasi real-time.</p></div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Detail Temuan Teknis dan Rekomendasi</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Aspek</th><th>Kondisi Saat Audit</th><th>Risiko / Dampak</th><th>Rekomendasi</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Autentikasi</strong></td><td>Login masih simulatif.</td><td>Identitas dan hak akses belum terjamin.</td><td>Implementasikan backend authentication dan role-based access control.</td></tr>
+                <tr><td><strong>Pembayaran</strong></td><td>Status pembayaran dapat berubah melalui fungsi simulasi.</td><td>Validitas transaksi belum dapat dibuktikan.</td><td>Gunakan payment gateway dan verifikasi callback server.</td></tr>
+                <tr><td><strong>Escrow</strong></td><td>Alur escrow direpresentasikan melalui state aplikasi.</td><td>Belum membuktikan dana benar-benar ditahan dan dilepas.</td><td>Integrasikan mekanisme pembayaran dan pencairan yang sah.</td></tr>
+                <tr><td><strong>Smart Match</strong></td><td>Beberapa skor masih ditentukan secara hardcode.</td><td>Hasil pencocokan belum sepenuhnya dinamis.</td><td>Gunakan data aktual dan perhitungan skor berbasis parameter.</td></tr>
+                <tr><td><strong>Chat</strong></td><td>Respons percakapan menggunakan simulasi.</td><td>Komunikasi belum real-time.</td><td>Integrasikan layanan komunikasi real-time.</td></tr>
+                <tr><td><strong>API Key</strong></td><td>Pengelolaan API key di sisi frontend perlu ditinjau.</td><td>Potensi paparan kredensial.</td><td>Pindahkan pengelolaan secret ke server.</td></tr>
+                <tr><td><strong>Database</strong></td><td>Belum terlihat bukti persistensi backend menyeluruh.</td><td>Data berisiko tidak tersimpan secara permanen.</td><td>Bangun database dan API terpusat.</td></tr>
+                <tr><td><strong>Kalender</strong></td><td>Terdapat tanggal default yang mengacu pada April 2026.</td><td>Informasi tanggal dapat menjadi tidak relevan.</td><td>Gunakan tanggal dinamis dan validasi jadwal.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Catatan Alur Status Booking</h3>
+          <p>State yang teridentifikasi mencakup draft, pending_payment, escrow_locked, confirmed_by_guide, in_tour, completed, dan cancelled. Status pembayaran dan konfirmasi pemandu sebaiknya dipisahkan agar tidak menimbulkan ambiguitas.</p>
+          <div class="flow">
+            <div class="flow-step"><b>Draft</b><small>Pemesanan dibuat</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Pending Payment</b><small>Menunggu pembayaran</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Payment Verified</b><small>Pembayaran tervalidasi</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Confirmed</b><small>Jadwal dikunci</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>In Tour</b><small>Wisata berlangsung</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Completed</b><small>Layanan selesai</small></div>
+          </div>
+          <span class="tag tag-orange">Usulan perbaikan state machine, bukan klaim implementasi saat ini</span>
+        </div>
+      </section>
+
+      <!-- SCM -->
+      <section id="scm">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">03 / Supply Chain Management</div>
+            <h2>Analisis Supply Chain Management</h2>
+            <p>Pemetaan aktor, aliran rantai pasok, dan posisi Decoupling Point.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Ekosistem Aktor ZHS</h3>
+          <div class="grid grid-3">
+            <div class="flow-step"><b>Wisatawan</b><small>Pihak yang membutuhkan layanan wisata.</small></div>
+            <div class="flow-step"><b>Pemandu Lokal</b><small>Penyedia jasa pendamping wisata.</small></div>
+            <div class="flow-step"><b>UMKM Lokal</b><small>Penyedia produk dan pengalaman lokal.</small></div>
+            <div class="flow-step"><b>Transportasi</b><small>Penyedia mobilitas wisatawan.</small></div>
+            <div class="flow-step"><b>Pengelola Destinasi</b><small>Pengelola lokasi wisata.</small></div>
+            <div class="flow-step" style="background:#edf1ff"><b>ZHS Platform</b><small>Koordinator dan penghubung ekosistem.</small></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Empat Aliran Supply Chain</h3>
+          <div class="grid grid-2">
+            <div class="roadmap-item"><div><h4>Aliran Informasi</h4><p>Preferensi wisatawan, ketersediaan pemandu, informasi destinasi, dan komunikasi antaraktor.</p></div></div>
+            <div class="roadmap-item"><div><h4>Aliran Layanan</h4><p>Proses matching, pemesanan, penyediaan pemandu, dan pelaksanaan perjalanan wisata.</p></div></div>
+            <div class="roadmap-item"><div><h4>Aliran Keuangan</h4><p>Pembayaran wisatawan, mekanisme escrow, dan distribusi pembayaran kepada mitra.</p></div></div>
+            <div class="roadmap-item"><div><h4>Aliran Umpan Balik</h4><p>Ulasan wisatawan, evaluasi mitra, keluhan, dan penyelesaian sengketa.</p></div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Posisi Decoupling Point (DP)</h3>
+          <p>Dalam konsep yang digunakan pada makalah, Decoupling Point ditempatkan pada tahap booking CONFIRMED. Pada titik ini, permintaan wisatawan berubah menjadi pesanan yang pasti sehingga jadwal pemandu dan itinerary dapat dikunci.</p>
+          <div class="flow">
+            <div class="flow-step"><b>Explore</b><small>Wisatawan mencari destinasi</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Matching</b><small>Memilih pemandu dan paket</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Booking</b><small>Permintaan dibuat</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step" style="background:#e8f7ef;border-color:#b8e6cd"><b style="color:#169b62">DP · CONFIRMED</b><small>Titik penguncian pesanan</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>Fulfillment</b><small>Layanan dilaksanakan</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FRAMEWORK -->
+      <section id="framework">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">04 / Framework Evaluation</div>
+            <h2>Analisis Framework</h2>
+            <p>Perbandingan pendekatan pengembangan dan evaluasi kesiapan sistem.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Perbandingan Framework</h3>
+            <p>Skor merupakan penilaian analitis berdasarkan kesesuaian kebutuhan ZHS, bukan hasil pengukuran lapangan atau sertifikasi.</p>
+
+            <div class="score-row">
+              <div class="score-info"><strong>SCOR Digital Standard</strong><span>89/100</span></div>
+              <div class="bar"><div class="bar-fill primary" style="width:89%"></div></div>
+            </div>
+            <div class="score-row">
+              <div class="score-info"><strong>Agile / Responsive Supply Chain</strong><span>82/100</span></div>
+              <div class="bar"><div class="bar-fill secondary" style="width:82%"></div></div>
+            </div>
+            <div class="score-row">
+              <div class="score-info"><strong>GSCF</strong><span>78/100</span></div>
+              <div class="bar"><div class="bar-fill light" style="width:78%"></div></div>
+            </div>
+            <div class="score-row">
+              <div class="score-info"><strong>PDCA</strong><span>72/100</span></div>
+              <div class="bar"><div class="bar-fill light" style="width:72%"></div></div>
+            </div>
+            <div class="score-row">
+              <div class="score-info"><strong>Lean Service</strong><span>68/100</span></div>
+              <div class="bar"><div class="bar-fill light" style="width:68%"></div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Kriteria Penilaian</h3>
+            <div class="score-row"><div class="score-info"><strong>Kesesuaian proses end-to-end</strong><span>25%</span></div><div class="bar"><div class="bar-fill" style="width:25%"></div></div></div>
+            <div class="score-row"><div class="score-info"><strong>Integrasi multi-mitra</strong><span>20%</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+            <div class="score-row"><div class="score-info"><strong>Pengukuran KPI</strong><span>20%</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+            <div class="score-row"><div class="score-info"><strong>Implementasi bertahap</strong><span>15%</span></div><div class="bar"><div class="bar-fill" style="width:15%"></div></div></div>
+            <div class="score-row"><div class="score-info"><strong>Adaptasi layanan digital</strong><span>10%</span></div><div class="bar"><div class="bar-fill" style="width:10%"></div></div></div>
+            <div class="score-row"><div class="score-info"><strong>Perbaikan berkelanjutan</strong><span>10%</span></div><div class="bar"><div class="bar-fill" style="width:10%"></div></div></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>SCOR Digital Standard — Pemetaan Proses</h3>
+          <p>SCOR digunakan sebagai kerangka utama untuk melihat proses rantai pasok dari koordinasi hingga penyelesaian layanan.</p>
+          <div class="flow">
+            <div class="flow-step"><b>ORCHESTRATE</b><small>Koordinasi ekosistem dan tata kelola</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>PLAN</b><small>Perencanaan permintaan dan kapasitas</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>ORDER</b><small>Penerimaan pesanan wisatawan</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>SOURCE</b><small>Pengadaan layanan mitra</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>TRANSFORM</b><small>Perakitan paket wisata</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>FULFILL</b><small>Pelaksanaan layanan</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step"><b>RETURN</b><small>Keluhan dan penyelesaian masalah</small></div>
+          </div>
+          <span class="tag tag-orange">Pemetaan konseptual untuk kebutuhan analisis ZHS</span>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>Estimasi Kesiapan Implementasi</h3>
+          <p>Skala 1–5: 1 Ad hoc, 2 Partially Defined, 3 Standardized, 4 Integrated, 5 Optimized. Nilai berikut merupakan estimasi analitis dari temuan kode, bukan hasil survei.</p>
+          <div class="grid grid-2" style="margin-top:12px">
+            <div>
+              <div class="score-row"><div class="score-info"><strong>Booking & Service</strong><span>2/5</span></div><div class="bar"><div class="bar-fill" style="width:40%"></div></div></div>
+              <div class="score-row"><div class="score-info"><strong>Authentication</strong><span>1/5</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+              <div class="score-row"><div class="score-info"><strong>Payment & Escrow</strong><span>1/5</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+            </div>
+            <div>
+              <div class="score-row"><div class="score-info"><strong>Partner Integration</strong><span>1/5</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+              <div class="score-row"><div class="score-info"><strong>Communication</strong><span>2/5</span></div><div class="bar"><div class="bar-fill" style="width:40%"></div></div></div>
+              <div class="score-row"><div class="score-info"><strong>SCM KPI & Analytics</strong><span>1/5</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:15px">
+          <h3>PDCA — Continuous Improvement</h3>
+          <div class="pdca-grid">
+            <div class="pdca-box"><strong>01</strong><b>PLAN</b><p>Identifikasi masalah, tetapkan target, dan rencanakan pengembangan.</p></div>
+            <div class="pdca-box"><strong>02</strong><b>DO</b><p>Implementasikan perbaikan secara bertahap pada sistem.</p></div>
+            <div class="pdca-box"><strong>03</strong><b>CHECK</b><p>Uji hasil implementasi dan evaluasi KPI yang ditetapkan.</p></div>
+            <div class="pdca-box"><strong>04</strong><b>ACT</b><p>Tetapkan perbaikan yang berhasil dan lanjutkan siklus berikutnya.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVALUASI DOKUMEN -->
+      <section id="dokumen">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">05 / Document Review</div>
+            <h2>Evaluasi Makalah dan PPT</h2>
+            <p>Penilaian terhadap kesesuaian dokumen dengan konsep dan implementasi website.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Evaluasi Makalah</h3>
+            <span class="tag tag-green">KEKUATAN</span>
+            <p style="margin-top:10px">Pemetaan aktor SCM, pembahasan responsive supply chain, konsep Decoupling Point, dan empat aliran rantai pasok telah membentuk landasan analisis yang jelas.</p>
+            <br>
+            <span class="tag tag-red">HAL YANG PERLU DIPERBAIKI</span>
+            <p style="margin-top:10px">Pembahasan masih bersifat konseptual. Data pasar lokal, hasil wawancara, pengujian sistem, KPI aktual, dan bukti integrasi mitra belum ditampilkan secara memadai.</p>
+          </div>
+          <div class="card">
+            <h3>Evaluasi PPT</h3>
+            <span class="tag tag-green">KEKUATAN</span>
+            <p style="margin-top:10px">Urutan pembahasan, perbandingan strategi, pemetaan aktor, posisi DP, dan rekomendasi mendukung penyampaian materi secara sistematis.</p>
+            <br>
+            <span class="tag tag-red">HAL YANG PERLU DIPERBAIKI</span>
+            <p style="margin-top:10px">Beberapa bagian terlalu padat teks. Perlu screenshot website, diagram dengan arah aliran yang jelas, penanda status implementasi, serta sitasi pada slide yang relevan.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ROADMAP -->
+      <section id="roadmap">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">06 / Development Roadmap</div>
+            <h2>Roadmap Pengembangan</h2>
+            <p>Urutan rekomendasi berdasarkan tingkat urgensi dan ketergantungan sistem.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Prioritas Implementasi</h3>
+            <div class="roadmap-item">
+              <span class="priority p0">P0</span>
+              <div><h4>Fondasi Sistem</h4><p>Backend dan database, autentikasi aman, otorisasi pengguna, payment gateway, serta perbaikan state machine booking.</p></div>
+            </div>
+            <div class="roadmap-item">
+              <span class="priority p1">P1</span>
+              <div><h4>Integrasi Operasional</h4><p>Dashboard kapasitas UMKM dan transportasi, Smart Match dinamis, sinkronisasi mitra, serta notifikasi real-time.</p></div>
+            </div>
+            <div class="roadmap-item">
+              <span class="priority p2">P2</span>
+              <div><h4>Optimasi dan Analitik</h4><p>Demand forecasting, dashboard KPI SCM, dan monitoring performa mitra.</p></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Rekomendasi Fitur Strategis</h3>
+            <div class="roadmap-item"><div><h4>Demand Forecasting</h4><p>Memperkirakan kebutuhan layanan berdasarkan pola permintaan.</p></div></div>
+            <div class="roadmap-item"><div><h4>Dashboard Kapasitas Mitra</h4><p>Memantau ketersediaan pemandu, UMKM, dan transportasi.</p></div></div>
+            <div class="roadmap-item"><div><h4>Dynamic Smart Match</h4><p>Menghitung kecocokan secara dinamis berdasarkan data aktual.</p></div></div>
+            <div class="roadmap-item"><div><h4>SCM Performance KPI</h4><p>Mengukur utilisasi pemandu, waktu respons booking, dan tingkat pembatalan.</p></div></div>
+            <div class="roadmap-item"><div><h4>Partner Monitoring</h4><p>Memantau kualitas dan konsistensi performa mitra.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONCLUSION -->
+      <section id="kesimpulan">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">07 / Final Assessment</div>
+            <h2>Kesimpulan Audit</h2>
+            <p>Rangkuman kondisi website dan arah pengembangan yang disarankan.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Hasil Penilaian</h3>
+          <p>
+            Platform Zam-Zam Hidden Spot telah memperlihatkan rancangan
+            layanan pariwisata digital yang mencakup wisatawan, pemandu lokal,
+            UMKM, transportasi, dan pengelola destinasi. Struktur antarmuka
+            dan modul layanan memberikan dasar yang cukup baik untuk
+            pengembangan lebih lanjut.
+          </p>
+          <br>
+          <p>
+            Namun, sejumlah fungsi penting masih perlu dibuktikan melalui
+            implementasi backend, autentikasi, pembayaran, integrasi mitra,
+            penyimpanan data, dan pengujian operasional. Oleh karena itu,
+            keberadaan fitur pada antarmuka belum dapat langsung dianggap
+            sebagai bukti bahwa seluruh proses bisnis telah berjalan secara
+            nyata.
+          </p>
+          <br>
+          <p>
+            Dari perspektif SCM, SCOR Digital Standard dapat digunakan
+            sebagai kerangka utama pemetaan proses, responsive supply chain
+            sebagai pendekatan strategi layanan, dan PDCA sebagai mekanisme
+            evaluasi berkelanjutan. Pengembangan sebaiknya dimulai dari
+            fondasi transaksi dan integrasi data sebelum berlanjut pada
+            analitik serta optimasi.
+          </p>
+        </div>
+
+        <div class="grid grid-3" style="margin-top:15px">
+          <div class="card"><h3>Fokus 1</h3><p>Pastikan transaksi, keamanan akun, dan status booking berjalan secara valid.</p></div>
+          <div class="card"><h3>Fokus 2</h3><p>Bangun integrasi informasi dan kapasitas seluruh mitra dalam satu ekosistem.</p></div>
+          <div class="card"><h3>Fokus 3</h3><p>Gunakan KPI dan evaluasi berkelanjutan untuk mengoptimalkan kinerja SCM.</p></div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="footer">
+      <span>© 2026 ZHS Website Audit Report · Zam-Zam Hidden Spot</span>
+      <span>Prepared for academic evaluation</span>
+    </footer>
+  </main>
+</div>
+
+<script>
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+const links = document.querySelectorAll('.nav-link');
+
+links.forEach(link => {
+  link.addEventListener('click', function() {
+    links.forEach(item => item.classList.remove('active'));
+    this.classList.add('active');
+
+    if (window.innerWidth <= 720) {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('show');
+    }
+  });
+});
+
+const sections = document.querySelectorAll('main section[id]');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 150) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  links.forEach(link => {
+    link.classList.toggle(
+      'active',
+      link.getAttribute('href') === '#' + current
+    );
+  });
+});
+</script>
+</body>
+</html>
